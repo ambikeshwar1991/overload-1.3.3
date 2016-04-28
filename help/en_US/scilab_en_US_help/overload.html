@@ -1,0 +1,120 @@
+<html><head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <title>overload</title>
+    <style type="text/css" media="all">
+      @import url("scilab_code.css");
+      @import url("xml_code.css");
+      @import url("c_code.css");
+      @import url("style.css");
+    </style>
+  </head>
+  <body>
+    <div class="manualnavbar">
+    <table width="100%"><tr>
+      <td width="30%">
+    	<span class="previous"><a href="section_521b5667bd19bc04e5758bd08f92e053.html">&lt;&lt; Overload Toolbox</a></span>
+
+      </td>
+      <td width="40%" class="center">
+      	<span class="top"><a href="section_521b5667bd19bc04e5758bd08f92e053.html">Overload Toolbox</a></span>
+
+      </td>
+      <td width="30%" class="next">
+      	
+      </td>
+    </tr></table>
+      <hr />
+    </div>
+
+
+
+    <span class="path"><a href="index.html">Overload Toolbox</a> &gt;&gt; <a href="section_521b5667bd19bc04e5758bd08f92e053.html">Overload Toolbox</a> &gt; overload</span>
+
+    <br /><br />
+    <div class="info"></div>
+  
+  <div class="refnamediv"><h1 class="refname">overload</h1>
+    
+    <p class="refpurpose">overload user-defined functions</p></div>
+  
+  <div class="refsynopsisdiv"><h3 class="title">Calling Sequence</h3>
+    
+    <div class="synopsis"><pre><span class="functionid">overload</span><span class="default">(</span><span class="default">funnam</span><span class="default"> [,</span><span class="default">type</span><span class="default">])</span></pre></div>
+    <div class="synopsis"><pre><span class="functionid">overload</span><span class="default">()</span></pre></div>
+    <div class="synopsis"><pre><span class="functionid">overload</span><span class="default">(</span><span class="default">table_of_overloaded_fun</span><span class="default">)</span></pre></div></div>
+  
+  <div class="refsection"><h3 class="title">Parameters</h3>
+    
+    <dl><dt><span class="term">funnam</span>
+	
+	<dd><p class="para">name of a user-defined function</p></dd></dt>
+      <dt><span class="term">type</span>
+	
+	<dd><p class="para">an optional vector (1 by n) of strings containing the types already managed by the function (see <a href="scilab://overloading" class="link">overloading</a> for type codes)</p></dd></dt>
+      <dt><span class="term">table_of_overloaded_fun</span>
+	
+	<dd><p class="para">a matrix (n by 2) of strings containing in the first column the name of functions which manage a specific type and in the second column the name of a real function.</p></dd></dt></dl></div>
+  
+  <div class="refsection"><h3 class="title">Description</h3>
+    
+    <p class="para">This function gives the possibility to overload user-defined functions.</p>
+    <p class="para">The overloaded function must exist in memory or in a accessible file.</p>
+    <p class="para">For example, the call <code class="literal">overload(funnam,[&#0039;s&#0039;,&#0039;c&#0039;])</code> makes the copy <code class="literal">%s_fun=fun</code>, creates an entry <code class="literal">%c_fun</code> in table which points to <code class="literal">&#0039;%s_fun&#0039;</code>, clears <code class="literal">fun</code> and creates an entry point <code class="literal">fun</code> in the dynamic library. After that, the call of <code class="literal">fun(arg1,...)</code> will be transformed in <code class="literal">%&lt;type_of_arg1&gt;_fun(arg1,...)</code>.</p>
+    <p class="para">Take care that only 98 functions can be overloaded by the toolbox.</p></div>
+  
+  <div class="refsection"><h3 class="title">Examples</h3>
+    
+    <div class="programlisting"><table border="0" width="100%"><tr><td width="98%"><pre class="scilabcode"><span class="scilabcomment">//define a fun inc for constant (type </span><span class="scilabcomment">&#0039;</span><span class="scilabcomment">s</span><span class="scilabcomment">&#0039;</span><span class="scilabcomment">),</span>
+<span class="scilabcomment">//polynomial (</span><span class="scilabcomment">&#0039;</span><span class="scilabcomment">p</span><span class="scilabcomment">&#0039;</span><span class="scilabcomment">) or boolean (</span><span class="scilabcomment">&#0039;</span><span class="scilabcomment">b</span><span class="scilabcomment">&#0039;</span><span class="scilabcomment">)</span>
+<span class="scilabcomment">//but not for string (</span><span class="scilabcomment">&#0039;</span><span class="scilabcomment">c</span><span class="scilabcomment">&#0039;</span><span class="scilabcomment">)</span>
+<a class="scilabcommand" href="scilab://deff">deff</a><span class="scilabopenclose">(</span><span class="scilabstring">&#0039;</span><span class="scilabstring">y=inc(x)</span><span class="scilabstring">&#0039;</span><span class="scilabdefault">,</span><span class="scilabstring">&#0039;</span><span class="scilabstring">y=x+1</span><span class="scilabstring">&#0039;</span><span class="scilabopenclose">)</span>
+
+<span class="scilabcomment">//define a function %c_inc which</span>
+<span class="scilabcomment">//deals the string type</span>
+<a class="scilabcommand" href="scilab://deff">deff</a><span class="scilabopenclose">(</span><span class="scilabstring">&#0039;</span><span class="scilabstring">y=%c_inc(x)</span><span class="scilabstring">&#0039;</span><span class="scilabdefault">,</span><span class="scilabstring">&#0039;</span><span class="scilabstring">y=code2str(str2code(x)+1)</span><span class="scilabstring">&#0039;</span><span class="scilabopenclose">)</span>
+
+<span class="scilabcomment">//overload the function inc and preserve</span>
+<span class="scilabcomment">//the types </span><span class="scilabcomment">&#0039;</span><span class="scilabcomment">s</span><span class="scilabcomment">&#0039;</span><span class="scilabcomment">, </span><span class="scilabcomment">&#0039;</span><span class="scilabcomment">p</span><span class="scilabcomment">&#0039;</span><span class="scilabcomment"> and </span><span class="scilabcomment">&#0039;</span><span class="scilabcomment">b</span><span class="scilabcomment">&#0039;</span>
+<span class="scilabid">overload</span><span class="scilabopenclose">(</span><span class="scilabstring">&#0039;</span><span class="scilabstring">inc</span><span class="scilabstring">&#0039;</span><span class="scilabdefault">,</span><span class="scilabopenclose">[</span><span class="scilabstring">&#0039;</span><span class="scilabstring">s</span><span class="scilabstring">&#0039;</span> <span class="scilabstring">&#0039;</span><span class="scilabstring">p</span><span class="scilabstring">&#0039;</span> <span class="scilabstring">&#0039;</span><span class="scilabstring">b</span><span class="scilabstring">&#0039;</span><span class="scilabopenclose">]</span><span class="scilabopenclose">)</span>
+
+<span class="scilabcomment">//now we can use inc with constant,</span>
+<span class="scilabcomment">//polynomial or string</span>
+<span class="scilabid">inc</span><span class="scilabopenclose">(</span><span class="scilabnumber">2</span><span class="scilabopenclose">)</span><span class="scilabdefault">,</span><span class="scilabid">inc</span><span class="scilabopenclose">(</span><span class="scilabnumber">1</span><span class="scilaboperator">+</span><span class="scilabconstants">%s</span><span class="scilaboperator">+</span><span class="scilabconstants">%s</span><span class="scilaboperator">^</span><span class="scilabnumber">2</span><span class="scilabopenclose">)</span><span class="scilabdefault">,</span><span class="scilabid">inc</span><span class="scilabopenclose">(</span><span class="scilabconstants">%t</span><span class="scilabopenclose">)</span>
+<span class="scilabid">inc</span><span class="scilabopenclose">(</span><span class="scilabstring">&#0039;</span><span class="scilabstring">abcdef</span><span class="scilabstring">&#0039;</span><span class="scilabopenclose">)</span>
+
+<span class="scilabcomment">//to see types managed by %s_inc</span>
+<span class="scilabid">a</span><span class="scilaboperator">=</span><span class="scilabid">overload</span><span class="scilabopenclose">(</span><span class="scilabopenclose">)</span>
+
+<span class="scilabcomment">//you can remove </span><span class="scilabcomment">&#0039;</span><span class="scilabcomment">p</span><span class="scilabcomment">&#0039;</span><span class="scilabcomment"> type</span>
+<span class="scilabid">a</span><span class="scilabopenclose">(</span><span class="scilabnumber">2</span><span class="scilabdefault">,</span><span class="scilabspecial">:</span><span class="scilabopenclose">)</span><span class="scilaboperator">=</span><span class="scilabopenclose">[</span><span class="scilabopenclose">]</span><span class="scilabdefault">,</span><span class="scilabid">overload</span><span class="scilabopenclose">(</span><span class="scilabid">a</span><span class="scilabopenclose">)</span>
+<span class="scilabid">inc</span><span class="scilabopenclose">(</span><span class="scilabconstants">%s</span><span class="scilabopenclose">)</span></pre></td><td valign="top"><a href="scilab://scilab.execexample/"><img src="ScilabExecute.png" border="0"/></a></td><td valign="top"><a href="scilab://scilab.editexample/"><img src="ScilabEdit.png" border="0"/></a></td><td></td></tr></table></div></div>
+  
+  <div class="refsection"><h3 class="title">Authors</h3>
+    
+    <ul class="itemizedlist"><li class="member">Calixte Denizet</li></ul></div>
+  
+  <div class="refsection"><h3 class="title">See also</h3>
+    
+    <ul class="itemizedlist"><li class="member"><a href="scilab://overloading" class="link">overloading</a></li></ul></div>
+    <br />
+
+    <div class="manualnavbar">
+    <table width="100%">
+    <tr><td colspan="3" class="next"><a href="http://bugzilla.scilab.org/enter_bug.cgi?product=Scilab%20software&component=Documentation%20pages" class="ulink">Report an issue</a></td></tr>
+<tr>
+      <td width="30%">
+    	<span class="previous"><a href="section_521b5667bd19bc04e5758bd08f92e053.html">&lt;&lt; Overload Toolbox</a></span>
+
+      </td>
+      <td width="40%" class="center">
+      	<span class="top"><a href="section_521b5667bd19bc04e5758bd08f92e053.html">Overload Toolbox</a></span>
+
+      </td>
+      <td width="30%" class="next">
+      	
+      </td>
+    </tr></table>
+      <hr />
+    </div>
+  </body>
+</html>
